@@ -1,0 +1,26 @@
+services:
+  server:
+    build: 
+      context: .docker/php/php8
+      dockerfile: dockerfile
+    container_name: php-apache
+    environment:
+      XDEBUG_MODE: "${XDEBUG_MODE}"
+    ports:
+      - '8000:80'
+    volumes:
+    - .:/app:delegated
+    - .docker/tmp/docker-xdebug:/tmp/docker-xdebug
+    - .docker/apache:/etc/apache2/sites-enabled
+    depends_on:
+      - mariadb
+
+  mariadb:
+    image: mariadb:10.3.39
+    restart: always
+    environment: 
+      MARIADB_ROOT_PASSWORD: rootpass
+    volumes: 
+      - .docker/db:/var/lib/mysql
+    ports: 
+      - '3306:3306'
