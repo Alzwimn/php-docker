@@ -20,6 +20,7 @@ services:
     restart: always
     environment: 
       MARIADB_ROOT_PASSWORD: rootpass
+      MARIADB_DATABASE: test
     volumes: 
       - .docker/db:/var/lib/mysql
     ports: 
